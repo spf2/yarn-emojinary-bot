@@ -18,6 +18,7 @@ describe('emojinary', function() {
     });
     it('should match similar movies', function () {
       assert.isOk(emojinary.fuzzyMatch("Sister Act II", "Sister Act"));
+      assert.isOk(emojinary.fuzzyMatch("The Revenant", "Revnant"));
     });
     it('should strip articles', function () {
       assert.isOk(emojinary.fuzzyMatch("The Station Agent", "Station Agent"));

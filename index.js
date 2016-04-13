@@ -24,17 +24,27 @@ app.use(function(req, res, next) {
     var command = message.text.trim().toLowerCase();
     if (command == "play" || command == "skip") {
       var games = storage.getItem(thread.threadId) || [];
-      games = games.filter(function(g) { g.user.ident != message.sender.ident });
+      var prevMovie;
+      games = games.filter(function(g) {
+        if (g.user.ident == message.sender.ident) {
+          prevMovie = g.movie;
+          return false;
+        }
+        return true;
+      });
       emojinary.aRandomMovie(function(movie) {
         games.push({
           'user': message.sender,
           'movie': movie,
         })
         storage.setItem(thread.threadId, games);
-        var response = {
-          'text': 'Your movie is "' + movie.title + '". Type it in emoji and see if your friends can guess it, or type skip for a different movie.'
-        };
-        res.end(JSON.stringify({'message': response}));
+        var text;
+        if (prevMovie) {
+          text = 'Skipped "' + prevMovie.title + '". Your movie is now "' + movie.title + '".'
+        } else {
+          text = 'Your movie is "' + movie.title + '". Type it in emoji and see if your friends can guess it, or type skip for a different movie.'
+        }
+        res.end(JSON.stringify({'message': {'text': text}}));
       })
       return;
     } else {
