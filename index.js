@@ -35,6 +35,7 @@ app.use(function(req, res, next) {
         };
         res.end(JSON.stringify({'message': response}));
       })
+      return;
     } else {
       var games = storage.getItem(thread.threadId) || [];
       var matches = games.filter(function(g) {
