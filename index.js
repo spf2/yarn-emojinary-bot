@@ -21,7 +21,8 @@ app.use(function(req, res, next) {
   if (req.body.delivery && req.body.delivery.message) {
     var message = req.body.delivery.message;
     var thread = req.body.delivery.thread;
-    if (message.text.trim().toLowerCase() == "play") {
+    var command = message.text.trim().toLowerCase();
+    if (command == "play" || command == "skip") {
       var games = storage.getItem(thread.threadId) || [];
       games = games.filter(function(g) { g.user.ident != message.sender.ident });
       emojinary.aRandomMovie(function(movie) {
@@ -31,7 +32,7 @@ app.use(function(req, res, next) {
         })
         storage.setItem(thread.threadId, games);
         var response = {
-          'text': 'Your movie is "' + movie.title + '". Type it in emoji and see if your friends can guess it.'
+          'text': 'Your movie is "' + movie.title + '". Type it in emoji and see if your friends can guess it, or type skip for a different movie.'
         };
         res.end(JSON.stringify({'message': response}));
       })
