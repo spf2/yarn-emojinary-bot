@@ -17,7 +17,7 @@ Demo bot that plays emoji charades
 
 `Carl: Trains, Plains and Automobiles`
 
-`[silence]`
+[silence]
 
 `Bob: Trainwreck!`
 
