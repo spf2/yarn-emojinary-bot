@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
     return
   }
 
-  if (req.body.delivery && req.body.delivery.message) {
+  if (req.body.delivery && req.body.delivery.message && req.body.delivery.message.text) {
     var message = req.body.delivery.message;
     var thread = req.body.delivery.thread;
     var command = message.text.trim().toLowerCase();
